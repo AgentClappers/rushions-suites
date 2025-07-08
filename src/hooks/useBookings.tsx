@@ -35,7 +35,7 @@ export const useBookings = () => {
 
     try {
       const { data, error } = await supabase
-        .from('bookings')
+        .from('bookings' as any)
         .select(`
           *,
           rooms (
@@ -73,7 +73,7 @@ export const useBookings = () => {
 
     try {
       const { data, error } = await supabase
-        .from('bookings')
+        .from('bookings' as any)
         .insert({
           user_id: user.id,
           room_id: roomId,

@@ -24,7 +24,7 @@ export const useRooms = () => {
   const fetchRooms = async () => {
     try {
       const { data, error } = await supabase
-        .from('rooms')
+        .from('rooms' as any)
         .select('*')
         .eq('is_available', true)
         .order('created_at', { ascending: false });
