@@ -23,8 +23,8 @@ export const useRooms = () => {
 
   const fetchRooms = async () => {
     try {
-      const { data, error } = await supabase
-        .from('rooms' as any)
+      const { data, error } = await (supabase as any)
+        .from('rooms')
         .select('*')
         .eq('is_available', true)
         .order('created_at', { ascending: false });
@@ -47,13 +47,13 @@ export const useRooms = () => {
     fetchRooms();
 
     // Set up real-time subscription for room availability
-    const subscription = supabase
+    const subscription = (supabase as any)
       .channel('rooms-changes')
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
         table: 'rooms'
-      }, (payload) => {
+      }, (payload: any) => {
         console.log('Room availability changed:', payload);
         fetchRooms(); // Refresh rooms when changes occur
       })

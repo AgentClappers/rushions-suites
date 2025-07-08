@@ -34,8 +34,8 @@ export const useBookings = () => {
     }
 
     try {
-      const { data, error } = await supabase
-        .from('bookings' as any)
+      const { data, error } = await (supabase as any)
+        .from('bookings')
         .select(`
           *,
           rooms (
@@ -72,8 +72,8 @@ export const useBookings = () => {
     }
 
     try {
-      const { data, error } = await supabase
-        .from('bookings' as any)
+      const { data, error } = await (supabase as any)
+        .from('bookings')
         .insert({
           user_id: user.id,
           room_id: roomId,
@@ -111,14 +111,14 @@ export const useBookings = () => {
 
     if (user) {
       // Set up real-time subscription for user's bookings
-      const subscription = supabase
+      const subscription = (supabase as any)
         .channel('user-bookings')
         .on('postgres_changes', {
           event: '*',
           schema: 'public',
           table: 'bookings',
           filter: `user_id=eq.${user.id}`
-        }, (payload) => {
+        }, (payload: any) => {
           console.log('Booking changed:', payload);
           fetchBookings(); // Refresh bookings when changes occur
         })
